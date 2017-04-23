@@ -3,6 +3,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -48,7 +49,9 @@ public class ChangeInfoDialog extends JDialog implements ActionListener{
 		}
 		if (e.getActionCommand() == "确认"){
 			originalNo = inputNo.getText();
+			System.out.println(originalNo);
 			ChangeDialog changeDialgog = new ChangeDialog(originalNo);
+			this.dispose();
 		}
 	}
 	
@@ -58,76 +61,100 @@ public class ChangeInfoDialog extends JDialog implements ActionListener{
 	}
 }
 
-class ChangeDialog extends JDialog implements ActionListener{
-	JTextField name, IDNumber, phoneNumber, mailAddress, cellNumber, QQNumber;
-	JButton comfirmButton, resetButton, cancelButton;
+class ChangeDialog implements ActionListener{
+	JDialog addInfoDialog;
+	JPanel addInfoPanel;
+	JPanel addOperatePanel;
+	JPanel p2, p3, p4, p5, p6, p7, p8;	// No time to change these into a array, so just use them this way
+	JTextField userNameValue, IDValue, phoneNumber, mailAddress, cellNumber, QQNumber;
 	JRadioButton male, female;
+	ButtonGroup sexChoice;
 	
 	public ChangeDialog(String originalNo){
-		this.setTitle("修改求租人信息");
-		this.setBounds(200, 200, 400, 400);
+		addInfoDialog = new JDialog();
+		addInfoDialog.setBounds(200, 200, 400, 400);
+		addInfoDialog.setTitle("修改求组人信息");
+		addInfoDialog.setVisible(true);
 		
-		JPanel changeInfoPanel = new JPanel();
-		JPanel operatePanel = new JPanel();
-		changeInfoPanel.setLayout(new GridLayout(8, 2));
-		JPanel infoPanel[] = new JPanel[16];
+		addInfoPanel = new JPanel();
+		addInfoPanel.setBorder(BorderFactory.createTitledBorder("编号 " + originalNo));
+		addInfoPanel.setLayout(new GridLayout(8, 1));
 		
-		JLabel renter = new JLabel("求租人编号");
-		JLabel renterNo = new JLabel(originalNo);
-		JLabel nameLabel = new JLabel("姓名");
-		JLabel sexLabel = new JLabel("性别");
-		JLabel IDLabel = new JLabel("身份证号码");
-		JLabel phoneLabel = new JLabel("家庭电话");
-		JLabel mailLabel = new JLabel("邮箱");
-		JLabel cellLabel = new JLabel("手机");
-		JLabel QQLabel = new JLabel("QQ");
+		JLabel userName = new JLabel("姓名             ", JLabel.RIGHT);
+		userNameValue = new JTextField(15);
+		p2 = new JPanel();
+		p2.add(userName);
+		p2.add(userNameValue);
 		
-		name = new JTextField(15);
-		IDNumber = new JTextField(15);
-		phoneNumber = new JTextField(15);
-		mailAddress = new JTextField(15);
-		cellNumber = new JTextField(15);
-		QQNumber = new JTextField(15);
-		ButtonGroup sexChoice = new ButtonGroup();
+		JLabel sex = new JLabel("性别             ", JLabel.RIGHT);
 		male = new JRadioButton("男");
 		female = new JRadioButton("女");
+		sexChoice = new ButtonGroup();
 		sexChoice.add(male);
 		sexChoice.add(female);
+		p3 = new JPanel();
+		p3.add(sex);
+		p3.add(male);
+		p3.add(female);
 		
-		infoPanel[0].add(renter);
-		infoPanel[1].add(renterNo);
-		infoPanel[2].add(nameLabel);
-		infoPanel[3].add(name);
-		infoPanel[4].add(sexLabel);
-		infoPanel[5].add(male);
-		infoPanel[5].add(female);
-		infoPanel[6].add(IDLabel);
-		infoPanel[7].add(IDNumber);
-		infoPanel[8].add(phoneLabel);
-		infoPanel[9].add(phoneNumber);
-		infoPanel[10].add(mailLabel);
-		infoPanel[11].add(mailAddress);
-		infoPanel[12].add(cellLabel);
-		infoPanel[13].add(cellNumber);
-		infoPanel[14].add(QQLabel);
-		infoPanel[15].add(QQNumber);
+		JLabel ID = new JLabel("身份证号码");
+		IDValue = new JTextField(15);
+		p4 = new JPanel();
+		p4.add(ID);
+		p4.add(IDValue);
 		
-		for (int i = 0; i < 16; i++){
-			System.out.println("i = " + i);
-			changeInfoPanel.add(infoPanel[i]);
-		}
+		JLabel phone = new JLabel("家庭电话    ");
+		phoneNumber = new JTextField(15);
+		p5 = new JPanel();
+		p5.add(phone);
+		p5.add(phoneNumber);
 		
-		operatePanel.add(comfirmButton);
-		operatePanel.add(resetButton);
-		operatePanel.add(cancelButton);
+		JLabel mail = new JLabel("邮箱            ", JLabel.RIGHT);
+		mailAddress = new JTextField(15);
+		p6 = new JPanel();
+		p6.add(mail);
+		p6.add(mailAddress);
 		
-		this.add(changeInfoPanel, BorderLayout.CENTER);
-		this.add(operatePanel, BorderLayout.SOUTH);
+		JLabel cell = new JLabel("手机             ", JLabel.RIGHT);
+		cellNumber = new JTextField(15);
+		p7 = new JPanel();
+		p7.add(cell);
+		p7.add(cellNumber);
 		
-		this.setVisible(true);
+		JLabel QQ = new JLabel("QQ               ", JLabel.RIGHT);
+		QQNumber = new JTextField(15);
+		p8 = new JPanel();
+		p8.add(QQ);
+		p8.add(QQNumber);
+		
+		addInfoPanel.add(p3);
+		addInfoPanel.add(p2);
+		addInfoPanel.add(p4);
+		addInfoPanel.add(p5);
+		addInfoPanel.add(p6);
+		addInfoPanel.add(p7);
+		addInfoPanel.add(p8);
+		
+		addOperatePanel = new JPanel();
+		JButton bt1 = new JButton("确定");
+		JButton bt3 = new JButton("取消");
+		addOperatePanel.add(bt1);
+		addOperatePanel.add(bt3);
+		
+		bt1.addActionListener(this);
+		bt3.addActionListener(this);
+		
+		addInfoDialog.add(addInfoPanel, BorderLayout.CENTER);
+		addInfoDialog.add(addOperatePanel, BorderLayout.SOUTH);
+		addInfoDialog.setVisible(true);
 	}
 	
 	public void actionPerformed(ActionEvent e){
-		
+		if (e.getActionCommand() == "确定"){
+			addInfoDialog.dispose();
+		}
+		if (e.getActionCommand() == "取消"){
+			addInfoDialog.dispose();
+		}
 	}
 }
