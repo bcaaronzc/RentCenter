@@ -11,7 +11,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-
 public class HirePerson extends JFrame implements ActionListener{
 	/**
 	 * @param args
@@ -59,12 +58,7 @@ public class HirePerson extends JFrame implements ActionListener{
 			System.exit(0);
 		}
 		if (e.getActionCommand().equals("修改")){		// 获取触发事件的事件源的文本，若相同，则弹出窗体
-			JDialog changeDialog = new JDialog();
-			changeDialog.setVisible(true);
-			changeDialog.setTitle("修改求租人信息");
-			JLabel tempLabel = new JLabel("建设中，敬请期待！");
-			changeDialog.add(tempLabel);
-			changeDialog.setBounds(200, 200, 400, 400);
+			ChangeInfoDialog changeInfoDialog = new ChangeInfoDialog();
 		}
 		if (e.getActionCommand().equals("删除")){		// 获取触发事件的事件源的文本，若相同，则弹出窗体
 			JDialog deleteDialog = new JDialog();
