@@ -24,6 +24,7 @@ public class HirePerson extends JFrame implements ActionListener{
 		this.setTitle("求租人信息设置");
 		this.setVisible(true);
 		this.setBounds(200, 200, 800, 400);
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 		JPanel operatePanel = new JPanel();
 		operatePanel.setBorder(BorderFactory.createTitledBorder("求租人信息操作"));

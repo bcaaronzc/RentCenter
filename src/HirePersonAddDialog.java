@@ -101,11 +101,14 @@ public class HirePersonAddDialog implements ActionListener{
 		addOperatePanel = new JPanel();
 		JButton bt1 = new JButton("确定");
 		JButton bt2 = new JButton("重置");
+		JButton bt3 = new JButton("退出");
 		addOperatePanel.add(bt1);
 		addOperatePanel.add(bt2);
+		addOperatePanel.add(bt3);
 		
 		bt1.addActionListener(this);
 		bt2.addActionListener(this);
+		bt3.addActionListener(this);
 		
 		addInfoDialog.add(addInfoPanel, BorderLayout.CENTER);
 		addInfoDialog.add(addOperatePanel, BorderLayout.SOUTH);
@@ -125,6 +128,9 @@ public class HirePersonAddDialog implements ActionListener{
 		}
 		if (e.getActionCommand().equals("确定")){		// 获取触发事件的事件源的文本
 			AddSuccess addSuccess = new AddSuccess();
+		}
+		if (e.getActionCommand().equals("退出")){
+			addInfoDialog.dispose();
 		}
 	}
 	
