@@ -54,23 +54,14 @@ public class HirePerson extends JFrame implements ActionListener{
 		if (e.getActionCommand().equals("添加")){		// 获取触发事件的事件源的文本，若相同，则弹出窗体
 			HirePersonAddDialog newHirePerson = new HirePersonAddDialog();
 		}
-		if (e.getActionCommand().equals("退出")){		// 获取触发事件的事件源的文本，若相同，则弹出窗体
-			System.exit(0);
-		}
 		if (e.getActionCommand().equals("修改")){		// 获取触发事件的事件源的文本，若相同，则弹出窗体
 			ChangeInfoDialog changeInfoDialog = new ChangeInfoDialog();
 		}
 		if (e.getActionCommand().equals("删除")){		// 获取触发事件的事件源的文本，若相同，则弹出窗体
-			JDialog deleteDialog = new JDialog();
-			deleteDialog.setVisible(true);
-			deleteDialog.setTitle("删除求租人信息");
-			deleteDialog.setLayout(new GridLayout(2, 2));
-			deleteDialog.setBounds(200, 200, 400, 70);
-			
-			JLabel delete = new JLabel("  输入您要删除的求租人编号");
-			JTextField deleteNum = new JTextField(15);
-			deleteDialog.add(delete);
-			deleteDialog.add(deleteNum);
+			DeleteDialog deleteDialog = new DeleteDialog();
+		}
+		if (e.getActionCommand().equals("退出")){		// 获取触发事件的事件源的文本，若相同，则弹出窗体
+			System.exit(0);
 		}
 	}
 	
