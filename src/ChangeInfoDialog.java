@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class ChangeInfoDialog extends JDialog implements ActionListener{
+	// TODO Add secondary dialog (another class) where the data can change
 	JTextField inputNo;
 	JButton comfirmButton, cancelButton;
 	
