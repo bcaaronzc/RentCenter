@@ -124,19 +124,7 @@ public class HirePersonAddDialog implements ActionListener{
 			QQNumber.setText("");
 		}
 		if (e.getActionCommand().equals("确定")){		// 获取触发事件的事件源的文本
-			JDialog temp = new JDialog();
-			temp.setTitle("添加成功！");
-			temp.setBounds(400, 400, 300, 100);
-			temp.setVisible(true);
-			
-			JLabel tempLabel = new JLabel("添加成功");
-			temp.add(tempLabel, BorderLayout.CENTER);
-			
-			JButton tempOKButton = new JButton("确认");
-			tempOKButton.addActionListener(this);
-			temp.add(tempOKButton, BorderLayout.SOUTH);
-			
-			addInfoDialog.dispose();
+			AddSuccess addSuccess = new AddSuccess();
 		}
 	}
 	
@@ -146,10 +134,23 @@ public class HirePersonAddDialog implements ActionListener{
 	}
 }
 
-class AddSuccess implements ActionListener{
-	JDialog addSuccess = new JDialog();
+class AddSuccess extends JDialog implements ActionListener{
+	public AddSuccess(){
+		this.setTitle("添加成功！");
+		this.setBounds(400, 400, 300, 100);
+		this.setVisible(true);
+		
+		JLabel successLabel = new JLabel("                                       添加成功");
+		this.add(successLabel, BorderLayout.CENTER);
+		
+		JButton confirmButton = new JButton("确认");
+		confirmButton.addActionListener(this);
+		this.add(confirmButton, BorderLayout.SOUTH);
+	}
 	
 	public void actionPerformed(ActionEvent e){
-		
+		if (e.getActionCommand() == "确认"){
+			this.dispose();
+		}
 	}
 }
