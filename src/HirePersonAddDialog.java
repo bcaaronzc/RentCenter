@@ -130,7 +130,36 @@ public class HirePersonAddDialog implements ActionListener{
 			QQNumber.setText("");
 		}
 		if (e.getActionCommand().equals("确定")){		// 获取触发事件的事件源的文本
-			// TODO 加入错误捕捉，若有未输入项则跳出一个新的对话框提示必须全部输入
+			// Obtain data
+			boolean repeat = false;
+			String data[] = new String[8];
+			for (int i = 0; i < 8; i++){
+				data[i] = "";
+			}
+			data[0] = hirePersonValue.getText();
+			data[1] = userNameValue.getText();
+			data[3] = IDValue.getText();
+			data[4] = phoneNumber.getText();
+			data[5] = mailAddress.getText();
+			data[6] = cellNumber.getText();
+			data[7] = QQNumber.getText();
+			if (male.isSelected()){
+				data[2] = "true";
+			}
+			else if (female.isSelected()){
+				data[2] = "false";
+			}
+			
+			for (int i = 0; i < 8; i++){
+				if (data[i] == ""){
+					repeat = true;
+				}
+			}
+			
+			while (repeat == true){
+				AddFail addFail = new AddFail();
+			}
+			
 			saveData();
 			AddSuccess addSuccess = new AddSuccess();
 			addInfoDialog.dispose();
@@ -147,7 +176,7 @@ public class HirePersonAddDialog implements ActionListener{
 		if (male.isSelected()){
 			line[2] = "true";
 		}
-		if (female.isSelected()){
+		else if (female.isSelected()){
 			line[2] = "false";
 		}
 		line[3] = IDValue.getText();
@@ -205,6 +234,32 @@ class AddSuccess extends JDialog implements ActionListener{
 		JButton confirmButton = new JButton("确认");
 		confirmButton.addActionListener(this);
 		this.add(confirmButton, BorderLayout.SOUTH);
+	}
+	
+	public void actionPerformed(ActionEvent e){
+		if (e.getActionCommand() == "确认"){
+			this.dispose();
+		}
+	}
+}
+
+class AddFail extends JDialog implements ActionListener{
+	
+	public AddFail(){
+		this.setTitle("添加失败");
+		this.setBounds(400, 400, 300, 100);
+		this.setVisible(true);
+		
+		JLabel failLabel = new JLabel("请输入所有需要的信息。");
+		JPanel labelPanel = new JPanel();
+		labelPanel.add(failLabel);
+		this.add(labelPanel, BorderLayout.CENTER);
+		
+		JButton comfirmButton = new JButton("确认");
+		comfirmButton.addActionListener(this);
+		JPanel comfirmPanel = new JPanel();
+		comfirmPanel.add(comfirmButton);
+		this.add(comfirmPanel, BorderLayout.SOUTH);
 	}
 	
 	public void actionPerformed(ActionEvent e){
