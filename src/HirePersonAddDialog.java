@@ -130,6 +130,7 @@ public class HirePersonAddDialog implements ActionListener{
 			QQNumber.setText("");
 		}
 		if (e.getActionCommand().equals("确定")){		// 获取触发事件的事件源的文本
+			// TODO 加入错误捕捉，若有未输入项则跳出一个新的对话框提示必须全部输入
 			saveData();
 			AddSuccess addSuccess = new AddSuccess();
 			addInfoDialog.dispose();
