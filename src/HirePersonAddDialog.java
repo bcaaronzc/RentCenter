@@ -2,6 +2,9 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -127,11 +130,59 @@ public class HirePersonAddDialog implements ActionListener{
 			QQNumber.setText("");
 		}
 		if (e.getActionCommand().equals("确定")){		// 获取触发事件的事件源的文本
+			saveData();
 			AddSuccess addSuccess = new AddSuccess();
 			addInfoDialog.dispose();
 		}
 		if (e.getActionCommand().equals("取消")){
 			addInfoDialog.dispose();
+		}
+	}
+	
+	public void saveData(){
+		String line[] = new String[8];
+		line[0] = hirePersonValue.getText();
+		line[1] = userNameValue.getText();
+		if (male.isSelected()){
+			line[2] = "true";
+		}
+		if (female.isSelected()){
+			line[2] = "false";
+		}
+		line[3] = IDValue.getText();
+		line[4] = phoneNumber.getText();
+		line[5] = mailAddress.getText();
+		line[6] = cellNumber.getText();
+		line[7] = QQNumber.getText();
+		
+		File newFile = new File("src/data", line[0] + ".txt");
+		if (newFile.exists()){
+			// TODO 创建一个创建未成功类
+			System.out.println("创建失败！");
+		}
+		else{
+			try {  
+	            if (newFile.createNewFile()) {  
+	                System.out.println("创建成功！");  
+	            } else { 
+	                System.out.println("创建失败！");
+	            }
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	            System.out.println("创建失败！" + e.getMessage());
+	        }
+		}
+
+		for (int i = 0; i < 8; i++){
+			try {
+	            //打开一个写文件器，构造函数中的第二个参数true表示以追加形式写文件
+				FileWriter writer = new FileWriter("src/data/" + line[0] + ".txt", true);
+	            writer.write(line[i]);
+	            writer.write("\r\n");
+	            writer.close();
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
 		}
 	}
 	
