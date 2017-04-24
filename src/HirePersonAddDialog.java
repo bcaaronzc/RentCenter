@@ -128,6 +128,7 @@ public class HirePersonAddDialog implements ActionListener{
 		}
 		if (e.getActionCommand().equals("确定")){		// 获取触发事件的事件源的文本
 			AddSuccess addSuccess = new AddSuccess();
+			addInfoDialog.dispose();
 		}
 		if (e.getActionCommand().equals("取消")){
 			addInfoDialog.dispose();
