@@ -135,6 +135,9 @@ class ChangeDialog implements ActionListener{
 		p2.add(userName);
 		p2.add(userNameValue);
 		
+		//------------------- Here is a bug ------------------------------
+		//------------------- originalVal[2] == "true" -------------------
+		//------------------- originalVal[2] != "true" -------------------
 		JLabel sex = new JLabel("性别             ", JLabel.RIGHT);
 		male = new JRadioButton("男", true);
 		female = new JRadioButton("女");
@@ -149,6 +152,7 @@ class ChangeDialog implements ActionListener{
 		p3.add(sex);
 		p3.add(male);
 		p3.add(female);
+		//----------------------------------------------------------------
 		
 		JLabel ID = new JLabel("身份证号码");
 		IDValue = new JTextField(15);
