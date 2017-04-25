@@ -217,6 +217,7 @@ class ChangeDialog implements ActionListener{
 	public void actionPerformed(ActionEvent e){
 		if (e.getActionCommand() == "确定"){
 			changeData(originalNo);
+			ChangeDataSuccess changeDataSuccess = new ChangeDataSuccess();
 			addInfoDialog.dispose();
 		}
 		if (e.getActionCommand() == "取消"){
@@ -294,6 +295,32 @@ class OpenFileFail extends JDialog implements ActionListener{
 	
 	public void actionPerformed(ActionEvent e){
 		if (e.getActionCommand() == "确定"){
+			this.dispose();
+		}
+	}
+}
+
+class ChangeDataSuccess extends JDialog implements ActionListener{
+	
+	public ChangeDataSuccess(){
+		this.setTitle("修改成功");
+		this.setBounds(400, 400, 300, 115);
+		this.setVisible(true);
+		
+		JLabel successLabel = new JLabel("修改成功！");
+		JPanel labelPanel = new JPanel();
+		labelPanel.add(successLabel);
+		this.add(labelPanel, BorderLayout.CENTER);
+		
+		JButton comfirmButton = new JButton("确认");
+		comfirmButton.addActionListener(this);
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.add(comfirmButton);
+		this.add(buttonPanel, BorderLayout.SOUTH);
+	}
+	
+	public void actionPerformed(ActionEvent e){
+		if (e.getActionCommand() == "确认"){
 			this.dispose();
 		}
 	}
