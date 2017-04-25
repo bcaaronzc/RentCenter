@@ -2,6 +2,10 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -13,10 +17,12 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 public class ChangeInfoDialog extends JDialog implements ActionListener{
-	// TODO Add secondary dialog (another class) where the data can change
 	JTextField inputNo;
 	JButton comfirmButton, cancelButton;
 	String originalNo;
+	
+	String originalVal[] = new String[8];
+	String changedVal[] = new String[8];
 	
 	public ChangeInfoDialog(){
 		this.setTitle("修改求租人信息");
@@ -50,9 +56,53 @@ public class ChangeInfoDialog extends JDialog implements ActionListener{
 		if (e.getActionCommand() == "确认"){
 			originalNo = inputNo.getText();
 			System.out.println(originalNo);
-			ChangeDialog changeDialgog = new ChangeDialog(originalNo);
-			this.dispose();
+			File newFile = new File("src/data", originalNo + ".txt");
+			if (newFile.exists()){
+				openFile(originalNo + ".txt");
+
+				System.out.println(originalNo);
+				ChangeDialog changeDialgog = new ChangeDialog(originalNo);
+				this.dispose();
+			}
+			else if (!newFile.exists()){
+				// TODO 加入不存在的对话框
+				System.out.println("不存在的");
+			}
 		}
+	}
+	
+	public void openFile(String fileName){
+		File changeFile = new File("src/data", fileName);
+		BufferedReader reader = null;
+        try {
+            System.out.println("以行为单位读取文件内容，一次读一整行：");
+            reader = new BufferedReader(new FileReader(changeFile));
+            String tempString = null;
+            
+            for (int line = 0; line < 8; line++){
+            	originalVal[line] = reader.readLine();
+            }
+            
+/*            int line = 1;
+            // 一次读入一行，直到读入null为文件结束
+            while ((tempString = reader.readLine()) != null) {
+                // 显示行号
+                //System.out.println("line " + line + ": " + tempString);
+                System.out.println(tempString);
+                line++;
+            }*/
+            
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e1) {
+                }
+            }
+        }
 	}
 	
 	public static void main(String[] args) {
