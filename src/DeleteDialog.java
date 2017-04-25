@@ -1,6 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -44,8 +45,16 @@ public class DeleteDialog extends JDialog implements ActionListener{
 	
 	public void actionPerformed(ActionEvent e){
 		if (e.getActionCommand() == "确认"){
-			DeleteSuccess deleteSuccess = new DeleteSuccess();
-			this.dispose();
+			String fileName = deleteNoInput.getText();
+			File newFile = new File("src/data", fileName + ".txt");
+			if (newFile.exists()){
+				newFile.delete();
+				DeleteSuccess deleteSuccess = new DeleteSuccess();
+				this.dispose();
+			}
+			else if (!newFile.exists()){
+				DeleteFileFail deleteFileFail = new DeleteFileFail();
+			}
 		}
 		if (e.getActionCommand() == "取消"){
 			this.dispose();
@@ -81,6 +90,32 @@ class DeleteSuccess extends JDialog implements ActionListener{
 		this.add(buttonPanel, BorderLayout.SOUTH);
 		
 		this.setVisible(true);
+	}
+	
+	public void actionPerformed(ActionEvent e){
+		if (e.getActionCommand() == "确定"){
+			this.dispose();
+		}
+	}
+}
+
+class DeleteFileFail extends JDialog implements ActionListener{
+	
+	public DeleteFileFail(){
+		this.setTitle("删除失败！");
+		this.setBounds(400, 400, 300, 115);
+		this.setVisible(true);
+		
+		JLabel failLabel = new JLabel("对不起，未找到此求租人，删除失败。");
+		JPanel labelPanel = new JPanel();
+		labelPanel.add(failLabel);
+		this.add(labelPanel, BorderLayout.CENTER);
+		
+		JButton comfirmButton = new JButton("确定");
+		comfirmButton.addActionListener(this);
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.add(comfirmButton);
+		this.add(buttonPanel, BorderLayout.SOUTH);
 	}
 	
 	public void actionPerformed(ActionEvent e){
