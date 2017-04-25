@@ -65,8 +65,7 @@ public class ChangeInfoDialog extends JDialog implements ActionListener{
 				this.dispose();
 			}
 			else if (!newFile.exists()){
-				// TODO 加入不存在的对话框
-				System.out.println("不存在的");
+				OpenFileFail openfileFail = new OpenFileFail();
 			}
 		}
 	}
@@ -205,6 +204,32 @@ class ChangeDialog implements ActionListener{
 		}
 		if (e.getActionCommand() == "取消"){
 			addInfoDialog.dispose();
+		}
+	}
+}
+
+class OpenFileFail extends JDialog implements ActionListener{
+	
+	public OpenFileFail(){
+		this.setTitle("未找到信息");
+		this.setBounds(400, 400, 300, 115);
+		this.setVisible(true);
+		
+		JLabel failLabel = new JLabel("对不起，未找到此求租人");
+		JPanel labelPanel = new JPanel();
+		labelPanel.add(failLabel);
+		this.add(labelPanel, BorderLayout.CENTER);
+		
+		JButton comfirmButton = new JButton("确定");
+		comfirmButton.addActionListener(this);
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.add(comfirmButton);
+		this.add(buttonPanel, BorderLayout.SOUTH);
+	}
+	
+	public void actionPerformed(ActionEvent e){
+		if (e.getActionCommand() == "确定"){
+			this.dispose();
 		}
 	}
 }
