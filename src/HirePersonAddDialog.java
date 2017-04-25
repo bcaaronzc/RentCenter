@@ -134,7 +134,7 @@ public class HirePersonAddDialog implements ActionListener{
 			boolean repeat = false;
 			String data[] = new String[8];
 			for (int i = 0; i < 8; i++){
-				data[i] = "";
+				data[i] = " ";
 			}
 			data[0] = hirePersonValue.getText();
 			data[1] = userNameValue.getText();

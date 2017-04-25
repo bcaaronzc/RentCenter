@@ -106,7 +106,7 @@ class DeleteFileFail extends JDialog implements ActionListener{
 		this.setBounds(400, 400, 300, 115);
 		this.setVisible(true);
 		
-		JLabel failLabel = new JLabel("对不起，未找到此求租人，删除失败。");
+		JLabel failLabel = new JLabel("删除失败，未找到此求租人。");
 		JPanel labelPanel = new JPanel();
 		labelPanel.add(failLabel);
 		this.add(labelPanel, BorderLayout.CENTER);
