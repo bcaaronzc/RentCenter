@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 import javax.swing.BorderFactory;
@@ -22,7 +23,6 @@ public class ChangeInfoDialog extends JDialog implements ActionListener{
 	String originalNo;
 	
 	String originalVal[] = new String[8];
-	String changedVal[] = new String[8];
 	
 	public ChangeInfoDialog(){
 		this.setTitle("修改求租人信息");
@@ -117,8 +117,11 @@ class ChangeDialog implements ActionListener{
 	JTextField userNameValue, IDValue, phoneNumber, mailAddress, cellNumber, QQNumber;
 	JRadioButton male, female;
 	ButtonGroup sexChoice;
+	String originalNo;
 	
 	public ChangeDialog(String[] originalVal){
+		originalNo = originalVal[0];
+		
 		addInfoDialog = new JDialog();
 		addInfoDialog.setBounds(200, 200, 400, 400);
 		addInfoDialog.setTitle("修改求组人信息");
@@ -204,7 +207,7 @@ class ChangeDialog implements ActionListener{
 		addOperatePanel.add(bt3);
 		
 		bt1.addActionListener(this);
-		bt3.addActionListener(this);
+		bt3.addActionListener(this);	
 		
 		addInfoDialog.add(addInfoPanel, BorderLayout.CENTER);
 		addInfoDialog.add(addOperatePanel, BorderLayout.SOUTH);
@@ -213,10 +216,59 @@ class ChangeDialog implements ActionListener{
 	
 	public void actionPerformed(ActionEvent e){
 		if (e.getActionCommand() == "确定"){
+			changeData(originalNo);
 			addInfoDialog.dispose();
 		}
 		if (e.getActionCommand() == "取消"){
 			addInfoDialog.dispose();
+		}
+	}
+	
+	public void changeData(String originalNo){
+		String changedData[] = new String[8];
+		changedData[0] = originalNo;
+		changedData[1] = userNameValue.getText();
+		if (male.isSelected()){
+			changedData[2] = "true";
+		}
+		else if (female.isSelected()){
+			changedData[2] = "false";
+		}
+		changedData[3] = IDValue.getText();
+		changedData[4] = phoneNumber.getText();
+		changedData[5] = mailAddress.getText();
+		changedData[6] = cellNumber.getText();
+		changedData[7] = QQNumber.getText();
+		
+		File deleteFile = new File("src/data", originalNo + ".txt");
+		deleteFile.delete();
+		File changedFile = new File("src/data", originalNo + ".txt");
+		if (changedFile.exists()){
+			System.out.println("删除源文件，创建新文件出错。");
+		}
+		else {
+			try {  
+	            if (changedFile.createNewFile()) {  
+	                System.out.println("创建成功！");  
+	            } else { 
+	                System.out.println("创建失败！");
+	            }
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	            System.out.println("创建失败！" + e.getMessage());
+	        }
+		}
+		
+		for (int i = 0; i < 8; i++){
+			try {
+	            //打开一个写文件器，构造函数中的第二个参数true表示以追加形式写文件
+				FileWriter writer = new FileWriter("src/data/" + originalNo + ".txt", true);
+	            writer.write(changedData[i]);
+	            writer.write("\r\n");
+	            writer.close();
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
 		}
 	}
 }
