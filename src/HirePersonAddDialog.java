@@ -156,13 +156,14 @@ public class HirePersonAddDialog implements ActionListener{
 				}
 			}
 			
-			while (repeat == true){
+			if (repeat){
 				AddFail addFail = new AddFail();
 			}
-			
-			saveData();
-			AddSuccess addSuccess = new AddSuccess();
-			addInfoDialog.dispose();
+			else{
+				saveData();
+				AddSuccess addSuccess = new AddSuccess();
+				addInfoDialog.dispose();
+			}
 		}
 		if (e.getActionCommand().equals("取消")){
 			addInfoDialog.dispose();
@@ -247,7 +248,7 @@ class AddFail extends JDialog implements ActionListener{
 	
 	public AddFail(){
 		this.setTitle("添加失败");
-		this.setBounds(400, 400, 300, 100);
+		this.setBounds(400, 400, 300, 115);
 		this.setVisible(true);
 		
 		JLabel failLabel = new JLabel("请输入所有需要的信息。");
