@@ -226,11 +226,13 @@ public class HirePersonAddDialog implements ActionListener{
 class AddSuccess extends JDialog implements ActionListener{
 	public AddSuccess(){
 		this.setTitle("添加成功！");
-		this.setBounds(400, 400, 300, 100);
+		this.setBounds(400, 400, 300, 110);
 		this.setVisible(true);
 		
-		JLabel successLabel = new JLabel("                                       添加成功");
-		this.add(successLabel, BorderLayout.CENTER);
+		JLabel successLabel = new JLabel("添加成功");
+		JPanel labelPanel = new JPanel();
+		labelPanel.add(successLabel);
+		this.add(labelPanel, BorderLayout.CENTER);
 		
 		JButton confirmButton = new JButton("确认");
 		confirmButton.addActionListener(this);
