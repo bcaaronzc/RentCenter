@@ -1,7 +1,10 @@
 import java.awt.BorderLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -9,13 +12,16 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 
 public class HirePerson extends JFrame implements ActionListener{
 	/**
 	 * @param args
 	 */
-
+	
+	String[] colNames = {"编号", "姓名"};
+	
 	JDialog addInfoDialog = new JDialog();
 	//JFrame addInfoDialog = new JFrame();
 	
@@ -39,9 +45,25 @@ public class HirePerson extends JFrame implements ActionListener{
 		this.add(operatePanel, BorderLayout.NORTH);
 		
 		JPanel infoPanel = new JPanel();
-		JLabel tempLabel = new JLabel("建设中，敬请期待！");
-		infoPanel.setBorder(BorderFactory.createTitledBorder("求租人信息列表"));
-		infoPanel.add(tempLabel);
+		infoPanel.setVisible(true);
+		infoPanel.setBorder(BorderFactory.createTitledBorder("求租人列表"));
+		System.out.println(loadInfo());
+		if (loadInfo() == null){
+			JLabel tempLabel = new JLabel("暂无信息");			
+			infoPanel.add(tempLabel);
+		}
+		else {
+			System.out.println("有信息");
+			JTable dataTable = new JTable(loadInfo(), colNames);
+			dataTable.setVisible(true);
+			dataTable.setFillsViewportHeight(true);
+			JScrollPane dataTableScrollPane = new JScrollPane();
+			dataTable.add(dataTableScrollPane);
+			//infoPanel.add(dataTable);
+			//this.setContentPane(dataTable);
+			//add(dataTable, BorderLayout.CENTER);
+			infoPanel.add(dataTable);
+		}
 		this.add(infoPanel, BorderLayout.CENTER);
 		
 		addButton.addActionListener(this);	// 为 addButton 添加时间监听器，由当前窗口 (this) 进行监听
@@ -71,4 +93,44 @@ public class HirePerson extends JFrame implements ActionListener{
 		//hirePerson.HirePersonAddDialog();
 	}
 
+	public String[][] loadInfo(){
+		String[][] data;
+		File filePath = new File("src/data");
+		if (!filePath.isDirectory()){
+			System.out.println("Something is wrong, directory not found.");
+			return null;
+		}
+		else if (filePath.isDirectory()){
+			String[] fileList = filePath.list();
+			data = new String[fileList.length][3];
+			
+			for (int fileLength = 0; fileLength < fileList.length; fileLength++){
+				File oneFile = new File("src/data", fileList[fileLength]);
+				//String[] fileData = new String[8];
+				BufferedReader reader = null;
+		        try {
+		            //System.out.println("以行为单位读取文件内容，一次读一整行：");
+		            reader = new BufferedReader(new FileReader(oneFile));
+		            //String tempString = null;
+		            for (int line = 0; line < 3; line++){
+		            	data[fileLength][line] = reader.readLine();
+		            }
+		            reader.close();
+		        } catch (IOException e) {
+		            e.printStackTrace();
+		        } finally {
+		            if (reader != null) {
+		                try {
+		                    reader.close();
+		                } catch (IOException e1) {
+		                }
+		            }
+		        }
+			}
+			
+			return data;
+		}
+		
+		return null;
+	}
 }

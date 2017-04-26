@@ -75,20 +75,10 @@ public class ChangeInfoDialog extends JDialog implements ActionListener{
         try {
             System.out.println("以行为单位读取文件内容，一次读一整行：");
             reader = new BufferedReader(new FileReader(changeFile));
-            String tempString = null;
             
             for (int line = 0; line < 8; line++){
             	originalVal[line] = reader.readLine();
             }
-            
-/*            int line = 1;
-            // 一次读入一行，直到读入null为文件结束
-            while ((tempString = reader.readLine()) != null) {
-                // 显示行号
-                //System.out.println("line " + line + ": " + tempString);
-                System.out.println(tempString);
-                line++;
-            }*/
             
             reader.close();
         } catch (IOException e) {
