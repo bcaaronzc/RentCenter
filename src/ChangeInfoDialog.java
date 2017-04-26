@@ -21,10 +21,12 @@ public class ChangeInfoDialog extends JDialog implements ActionListener{
 	JTextField inputNo;
 	JButton comfirmButton, cancelButton;
 	String originalNo;
+	HirePerson hirePerson;
 	
 	String originalVal[] = new String[8];
 	
-	public ChangeInfoDialog(){
+	public ChangeInfoDialog(HirePerson initHirePerson){
+		hirePerson = initHirePerson;
 		this.setTitle("修改求租人信息");
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.setBounds(200, 200, 300, 130);
@@ -60,7 +62,7 @@ public class ChangeInfoDialog extends JDialog implements ActionListener{
 			if (newFile.exists()){
 				openFile(originalNo + ".txt");
 				System.out.println(originalNo);
-				ChangeDialog changeDialgog = new ChangeDialog(originalVal);
+				ChangeDialog changeDialgog = new ChangeDialog(originalVal, hirePerson);
 				this.dispose();
 			}
 			else if (!newFile.exists()){
@@ -95,7 +97,7 @@ public class ChangeInfoDialog extends JDialog implements ActionListener{
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		ChangeInfoDialog changeInfoDialog = new ChangeInfoDialog();
+		//ChangeInfoDialog changeInfoDialog = new ChangeInfoDialog();
 	}
 }
 
@@ -108,8 +110,10 @@ class ChangeDialog implements ActionListener{
 	JRadioButton male, female;
 	ButtonGroup sexChoice;
 	String originalNo;
+	HirePerson hirePerson;
 	
-	public ChangeDialog(String[] originalVal){
+	public ChangeDialog(String[] originalVal, HirePerson initHirePerson){
+		hirePerson = initHirePerson;
 		originalNo = originalVal[0];
 		
 		addInfoDialog = new JDialog();
@@ -207,6 +211,11 @@ class ChangeDialog implements ActionListener{
 	public void actionPerformed(ActionEvent e){
 		if (e.getActionCommand() == "确定"){
 			changeData(originalNo);
+			String[] colNamesRefreshed = {"编号", "姓名"};
+			DataTable infoTableRefreshed = new DataTable(colNamesRefreshed, hirePerson);
+			infoTableRefreshed.setOpaque(true);
+			hirePerson.add(infoTableRefreshed, BorderLayout.CENTER);
+			hirePerson.setVisible(true);
 			ChangeDataSuccess changeDataSuccess = new ChangeDataSuccess();
 			addInfoDialog.dispose();
 		}

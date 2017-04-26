@@ -28,8 +28,10 @@ public class HirePersonAddDialog implements ActionListener{
 	JTextField hirePersonValue, userNameValue, IDValue, phoneNumber, mailAddress, cellNumber, QQNumber;
 	JRadioButton male, female;
 	ButtonGroup sexChoice;
+	HirePerson hirePerson;	// Add for data transfer
 	
-	public HirePersonAddDialog(){
+	public HirePersonAddDialog(HirePerson initHirePerson){
+		hirePerson = initHirePerson;	// Add for data transfer
 		addInfoDialog = new JDialog();
 		addInfoDialog.setBounds(200, 200, 400, 400);
 		addInfoDialog.setTitle("添加求租人信息");
@@ -161,9 +163,16 @@ public class HirePersonAddDialog implements ActionListener{
 			}
 			else{
 				saveData();
+				// 刷新 DataTable
+				String[] colNamesRefreshed = {"编号", "姓名"};
+				DataTable infoTableRefreshed = new DataTable(colNamesRefreshed, hirePerson);
+				infoTableRefreshed.setOpaque(true);
+				hirePerson.add(infoTableRefreshed, BorderLayout.CENTER);
+				hirePerson.setVisible(true);
 				AddSuccess addSuccess = new AddSuccess();
 				addInfoDialog.dispose();
 			}
+			
 		}
 		if (e.getActionCommand().equals("取消")){
 			addInfoDialog.dispose();
@@ -219,7 +228,7 @@ public class HirePersonAddDialog implements ActionListener{
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		HirePersonAddDialog newDialog = new HirePersonAddDialog();
+		//HirePersonAddDialog newDialog = new HirePersonAddDialog();
 	}
 }
 

@@ -13,8 +13,11 @@ public class DeleteDialog extends JDialog implements ActionListener{
 	JLabel deleteNo;
 	JTextField deleteNoInput;
 	JButton comfirmButton, cancelButton;
+	HirePerson hirePerson;
 
-	public DeleteDialog(){
+	public DeleteDialog(HirePerson initHirePerson){
+		hirePerson = initHirePerson;
+		
 		this.setTitle("删除求租人信息");
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.setBounds(200, 200, 300, 150);
@@ -49,6 +52,14 @@ public class DeleteDialog extends JDialog implements ActionListener{
 			File newFile = new File("src/data", fileName + ".txt");
 			if (newFile.exists()){
 				newFile.delete();
+				
+				// 刷新 DataTable
+				String[] colNamesRefreshed = {"编号", "姓名"};
+				DataTable infoTableRefreshed = new DataTable(colNamesRefreshed, hirePerson);
+				infoTableRefreshed.setOpaque(true);
+				hirePerson.add(infoTableRefreshed, BorderLayout.CENTER);
+				hirePerson.setVisible(true);
+				
 				DeleteSuccess deleteSuccess = new DeleteSuccess();
 				this.dispose();
 			}
@@ -63,7 +74,7 @@ public class DeleteDialog extends JDialog implements ActionListener{
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		DeleteDialog deleteDialog = new DeleteDialog();
+		//DeleteDialog deleteDialog = new DeleteDialog();
 	}
 }
 

@@ -60,8 +60,8 @@ public class HirePerson extends JFrame implements ActionListener{
 		else {
 			System.out.println("有信息");
 			
-			DataTable infoTable = new DataTable(colNames, loadInfo());
-			infoTable.setOpaque(true);
+			DataTable infoTable = new DataTable(colNames, this);
+			infoTable.setOpaque(true);	// 不知道这是干什么用的，好像没什么反应
 			this.add(infoTable, BorderLayout.CENTER);
 			this.setVisible(true);
 		}
@@ -75,13 +75,13 @@ public class HirePerson extends JFrame implements ActionListener{
 	
 	public void actionPerformed(ActionEvent e){
 		if (e.getActionCommand().equals("添加")){		// 获取触发事件的事件源的文本，若相同，则弹出窗体
-			HirePersonAddDialog newHirePerson = new HirePersonAddDialog();
+			HirePersonAddDialog newHirePerson = new HirePersonAddDialog(this);
 		}
 		if (e.getActionCommand().equals("修改")){		// 获取触发事件的事件源的文本，若相同，则弹出窗体
-			ChangeInfoDialog changeInfoDialog = new ChangeInfoDialog();
+			ChangeInfoDialog changeInfoDialog = new ChangeInfoDialog(this);
 		}
 		if (e.getActionCommand().equals("删除")){		// 获取触发事件的事件源的文本，若相同，则弹出窗体
-			DeleteDialog deleteDialog = new DeleteDialog();
+			DeleteDialog deleteDialog = new DeleteDialog(this);
 		}
 		if (e.getActionCommand().equals("退出")){		// 获取触发事件的事件源的文本，若相同，则弹出窗体
 			System.exit(0);
@@ -140,9 +140,13 @@ class DataTable extends JPanel {
 	
 	String originalVal[] = new String[8];
 	
-	public DataTable(String[] colNames, Object[][] data){
-		// 不知道这两个参数是怎么来的，就是一个是表头，一个是显示的数据
+	HirePerson hirePerson;
+	
+	public DataTable(String[] colNames, HirePerson initHirePerson){
 		super(new BorderLayout());	// 不知道是干什么的，为什么不实现接口
+		hirePerson = initHirePerson;
+		Object[][] data = hirePerson.loadInfo();
+		// 不知道这两个参数是怎么来的，就是一个是表头，一个是显示的数据
 		
 		this.setBorder(BorderFactory.createTitledBorder("求租人列表"));
 		
@@ -180,7 +184,7 @@ class DataTable extends JPanel {
         if (newFile.exists()){
 			openFile(dataNum + ".txt");
 			System.out.println(dataNum);
-			ChangeDialog changeDialgog = new ChangeDialog(originalVal);
+			ChangeDialog changeDialgog = new ChangeDialog(originalVal, hirePerson);
 		}
 		else if (!newFile.exists()){
 			OpenFileFail openfileFail = new OpenFileFail();
