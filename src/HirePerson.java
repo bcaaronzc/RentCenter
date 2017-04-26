@@ -1,6 +1,8 @@
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -14,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 
 public class HirePerson extends JFrame implements ActionListener{
 	/**
@@ -48,23 +51,21 @@ public class HirePerson extends JFrame implements ActionListener{
 		infoPanel.setVisible(true);
 		infoPanel.setBorder(BorderFactory.createTitledBorder("求租人列表"));
 		System.out.println(loadInfo());
-		if (loadInfo() == null){
+		
+		String[][] noData = {{"no", "data"}, {"no", "data"}};
+		if (loadInfo() == noData){
 			JLabel tempLabel = new JLabel("暂无信息");			
 			infoPanel.add(tempLabel);
 		}
 		else {
 			System.out.println("有信息");
-			JTable dataTable = new JTable(loadInfo(), colNames);
-			dataTable.setVisible(true);
-			dataTable.setFillsViewportHeight(true);
-			JScrollPane dataTableScrollPane = new JScrollPane();
-			dataTable.add(dataTableScrollPane);
-			//infoPanel.add(dataTable);
-			//this.setContentPane(dataTable);
-			//add(dataTable, BorderLayout.CENTER);
-			infoPanel.add(dataTable);
+			
+			DataTable infoTable = new DataTable(colNames, loadInfo());
+			infoTable.setOpaque(true);
+			this.add(infoTable, BorderLayout.CENTER);
+			this.setVisible(true);
 		}
-		this.add(infoPanel, BorderLayout.CENTER);
+		//this.add(infoPanel, BorderLayout.CENTER);
 		
 		addButton.addActionListener(this);	// 为 addButton 添加时间监听器，由当前窗口 (this) 进行监听
 		quitButton.addActionListener(this);
@@ -95,10 +96,11 @@ public class HirePerson extends JFrame implements ActionListener{
 
 	public String[][] loadInfo(){
 		String[][] data;
+		String[][] noData = {{"no", "data"}, {"no", "data"}};
 		File filePath = new File("src/data");
 		if (!filePath.isDirectory()){
 			System.out.println("Something is wrong, directory not found.");
-			return null;
+			return noData;
 		}
 		else if (filePath.isDirectory()){
 			String[] fileList = filePath.list();
@@ -127,10 +129,85 @@ public class HirePerson extends JFrame implements ActionListener{
 		            }
 		        }
 			}
-			
 			return data;
 		}
-		
 		return null;
 	}
+}
+
+class DataTable extends JPanel {
+	private boolean DEBUG = true;	// 不知道是干什么的
+	
+	String originalVal[] = new String[8];
+	
+	public DataTable(String[] colNames, Object[][] data){
+		// 不知道这两个参数是怎么来的，就是一个是表头，一个是显示的数据
+		super(new BorderLayout());	// 不知道是干什么的，为什么不实现接口
+		
+		this.setBorder(BorderFactory.createTitledBorder("求租人列表"));
+		
+		final JTable dataTable = new JTable(data, colNames);
+		
+		// 不知道这是干什么的
+		if (DEBUG){
+			dataTable.addMouseListener(new MouseAdapter(){
+				public void mouseClicked(MouseEvent e) {
+                    directChangeData(dataTable);
+                }
+			});
+		}
+		
+		// Create the scroll pane and add the table to it.
+        //这也是官方建议使用的方式，否则表头不会显示，需要单独获取到TableHeader自己手动地添加显示
+		JScrollPane scrollPane = new JScrollPane(dataTable);
+		
+		// 居中显示，网上找的代码，我是不会的
+		DefaultTableCellRenderer r = new DefaultTableCellRenderer();   
+		r.setHorizontalAlignment(JLabel.CENTER);   
+		dataTable.setDefaultRenderer(Object.class, r);
+		
+		add(scrollPane);
+	}
+	
+    private void directChangeData(JTable table) {        
+        int numClicked = table.getSelectedRow();
+
+        javax.swing.table.TableModel model = table.getModel();
+        
+        String dataNum = "" + model.getValueAt(numClicked, 0);
+        
+        File newFile = new File("src/data", dataNum + ".txt");
+        if (newFile.exists()){
+			openFile(dataNum + ".txt");
+			System.out.println(dataNum);
+			ChangeDialog changeDialgog = new ChangeDialog(originalVal);
+		}
+		else if (!newFile.exists()){
+			OpenFileFail openfileFail = new OpenFileFail();
+		}
+    }
+    
+    public void openFile(String fileName){
+		File changeFile = new File("src/data", fileName);
+		BufferedReader reader = null;
+        try {
+            System.out.println("以行为单位读取文件内容，一次读一整行：");
+            reader = new BufferedReader(new FileReader(changeFile));
+            
+            for (int line = 0; line < 8; line++){
+            	originalVal[line] = reader.readLine();
+            }
+            
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e1) {
+                }
+            }
+        }
+    }
 }

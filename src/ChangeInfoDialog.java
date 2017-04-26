@@ -55,7 +55,7 @@ public class ChangeInfoDialog extends JDialog implements ActionListener{
 		}
 		if (e.getActionCommand() == "х╥хо"){
 			originalNo = inputNo.getText();
-			System.out.println(originalNo);
+			//System.out.println(originalNo);
 			File newFile = new File("src/data", originalNo + ".txt");
 			if (newFile.exists()){
 				openFile(originalNo + ".txt");
