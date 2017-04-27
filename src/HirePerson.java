@@ -27,6 +27,7 @@ public class HirePerson extends JFrame implements ActionListener{
 	
 	JDialog addInfoDialog = new JDialog();
 	//JFrame addInfoDialog = new JFrame();
+	DataTable infoTable;
 	
 	public HirePerson(){
 		this.setTitle("求租人信息设置");
@@ -60,7 +61,7 @@ public class HirePerson extends JFrame implements ActionListener{
 		else {
 			System.out.println("有信息");
 			
-			DataTable infoTable = new DataTable(colNames, this);
+			infoTable = new DataTable(colNames, this);
 			infoTable.setOpaque(true);	// 不知道这是干什么用的，好像没什么反应
 			this.add(infoTable, BorderLayout.CENTER);
 			this.setVisible(true);
@@ -72,6 +73,11 @@ public class HirePerson extends JFrame implements ActionListener{
 		changeButton.addActionListener(this);
 		deleteButton.addActionListener(this);
 	}
+	/*
+	public void refresh(){
+		System.out.println("刷新");
+		infoTable.updateUI();
+	}*/
 	
 	public void actionPerformed(ActionEvent e){
 		if (e.getActionCommand().equals("添加")){		// 获取触发事件的事件源的文本，若相同，则弹出窗体

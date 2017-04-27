@@ -164,11 +164,13 @@ public class HirePersonAddDialog implements ActionListener{
 			else{
 				saveData();
 				// Ë¢ÐÂ DataTable
+				
 				String[] colNamesRefreshed = {"±àºÅ", "ÐÕÃû"};
 				DataTable infoTableRefreshed = new DataTable(colNamesRefreshed, hirePerson);
 				infoTableRefreshed.setOpaque(true);
 				hirePerson.add(infoTableRefreshed, BorderLayout.CENTER);
 				hirePerson.setVisible(true);
+				//hirePerson.refresh();
 				AddSuccess addSuccess = new AddSuccess();
 				addInfoDialog.dispose();
 			}
