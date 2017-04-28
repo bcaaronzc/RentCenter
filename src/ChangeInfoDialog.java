@@ -211,7 +211,7 @@ class ChangeDialog implements ActionListener{
 	public void actionPerformed(ActionEvent e){
 		if (e.getActionCommand() == "确定"){
 			changeData(originalNo);
-			ChangeDataSuccess changeDataSuccess = new ChangeDataSuccess();
+			ChangeDataSuccess changeDataSuccess = new ChangeDataSuccess();/*
 			// 刷新 dataTable
 			
 			String[] colNamesRefreshed = {"编号", "姓名"};
@@ -219,7 +219,7 @@ class ChangeDialog implements ActionListener{
 			infoTableRefreshed.setOpaque(true);
 			hirePerson.add(infoTableRefreshed, BorderLayout.CENTER);
 			hirePerson.setVisible(true);
-			//hirePerson.refresh();
+			//hirePerson.refresh();*/
 			addInfoDialog.dispose();
 		}
 		if (e.getActionCommand() == "取消"){

@@ -53,14 +53,14 @@ public class DeleteDialog extends JDialog implements ActionListener{
 			if (newFile.exists()){
 				newFile.delete();
 				
-				DeleteSuccess deleteSuccess = new DeleteSuccess();
+				DeleteSuccess deleteSuccess = new DeleteSuccess();/*
 				// Ë¢ÐÂ DataTable
 				
 				String[] colNamesRefreshed = {"±àºÅ", "ÐÕÃû"};
 				DataTable infoTableRefreshed = new DataTable(colNamesRefreshed, hirePerson);
 				infoTableRefreshed.setOpaque(true);
 				hirePerson.add(infoTableRefreshed, BorderLayout.CENTER);
-				//hirePerson.refresh();
+				//hirePerson.refresh();*/
 				hirePerson.setVisible(true);
 				
 				this.dispose();
