@@ -47,8 +47,8 @@ public class HirePerson extends JFrame implements ActionListener{
 		operatePanel.add(addButton);
 		operatePanel.add(changeButton);
 		operatePanel.add(deleteButton);
-		operatePanel.add(quitButton);
 		operatePanel.add(refreshButton);
+		operatePanel.add(quitButton);
 		this.add(operatePanel, BorderLayout.NORTH);
 		/*
 		JPanel infoPanel = new JPanel();
