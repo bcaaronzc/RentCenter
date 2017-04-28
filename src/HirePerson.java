@@ -23,7 +23,7 @@ public class HirePerson extends JFrame implements ActionListener{
 	 * @param args
 	 */
 	
-	String[] colNames = {"编号", "姓名"};
+	String[] colNames = {"编号", "姓名", "性别"};
 	
 	JDialog addInfoDialog = new JDialog();
 	//JFrame addInfoDialog = new JFrame();

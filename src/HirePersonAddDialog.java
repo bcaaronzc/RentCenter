@@ -26,8 +26,10 @@ public class HirePersonAddDialog implements ActionListener{
 	JPanel addOperatePanel;
 	JPanel p1, p2, p3, p4, p5, p6, p7, p8;	// No time to change these into a array, so just use them this way
 	JTextField hirePersonValue, userNameValue, IDValue, phoneNumber, mailAddress, cellNumber, QQNumber;
+	JTextField sexValue;
+	/*
 	JRadioButton male, female;
-	ButtonGroup sexChoice;
+	ButtonGroup sexChoice;*/
 	HirePerson hirePerson;	// Add for data transfer
 	
 	public HirePersonAddDialog(HirePerson initHirePerson){
@@ -54,6 +56,11 @@ public class HirePersonAddDialog implements ActionListener{
 		p2.add(userNameValue);
 		
 		JLabel sex = new JLabel("性别             ", JLabel.RIGHT);
+		sexValue = new JTextField(15);
+		p3 = new JPanel();
+		p3.add(sex);
+		p3.add(sexValue);
+		/*
 		male = new JRadioButton("男");
 		female = new JRadioButton("女");
 		sexChoice = new ButtonGroup();
@@ -62,7 +69,7 @@ public class HirePersonAddDialog implements ActionListener{
 		p3 = new JPanel();
 		p3.add(sex);
 		p3.add(male);
-		p3.add(female);
+		p3.add(female);*/
 		
 		JLabel ID = new JLabel("身份证号码");
 		IDValue = new JTextField(15);
@@ -124,7 +131,7 @@ public class HirePersonAddDialog implements ActionListener{
 		if (e.getActionCommand().equals("重置")){		// 获取触发事件的事件源的文本
 			hirePersonValue.setText("");
 			userNameValue.setText("");
-			male.setSelected(true);
+			sexValue.setText("");
 			IDValue.setText("");
 			phoneNumber.setText("");
 			mailAddress.setText("");
@@ -140,17 +147,19 @@ public class HirePersonAddDialog implements ActionListener{
 			}
 			data[0] = hirePersonValue.getText();
 			data[1] = userNameValue.getText();
+			data[2] = sexValue.getText();
 			data[3] = IDValue.getText();
 			data[4] = phoneNumber.getText();
 			data[5] = mailAddress.getText();
 			data[6] = cellNumber.getText();
 			data[7] = QQNumber.getText();
+			/*
 			if (male.isSelected()){
 				data[2] = "true";
 			}
 			else if (female.isSelected()){
 				data[2] = "false";
-			}
+			}*/
 			
 			for (int i = 0; i < 8; i++){
 				if (data[i] == ""){
@@ -186,12 +195,14 @@ public class HirePersonAddDialog implements ActionListener{
 		String line[] = new String[8];
 		line[0] = hirePersonValue.getText();
 		line[1] = userNameValue.getText();
+		line[2] = sexValue.getText();
+		/*
 		if (male.isSelected()){
 			line[2] = "true";
 		}
 		else if (female.isSelected()){
 			line[2] = "false";
-		}
+		}*/
 		line[3] = IDValue.getText();
 		line[4] = phoneNumber.getText();
 		line[5] = mailAddress.getText();

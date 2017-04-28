@@ -107,8 +107,10 @@ class ChangeDialog implements ActionListener{
 	JPanel addOperatePanel;
 	JPanel p2, p3, p4, p5, p6, p7, p8;	// No time to change these into a array, so just use them this way
 	JTextField userNameValue, IDValue, phoneNumber, mailAddress, cellNumber, QQNumber;
+	JTextField sexValue;
+	/*
 	JRadioButton male, female;
-	ButtonGroup sexChoice;
+	ButtonGroup sexChoice;*/
 	String originalNo;
 	HirePerson hirePerson;
 	
@@ -132,10 +134,10 @@ class ChangeDialog implements ActionListener{
 		p2.add(userName);
 		p2.add(userNameValue);
 		
-		//------------------- Here is a bug ------------------------------
-		//------------------- originalVal[2] == "true" -------------------
-		//------------------- originalVal[2] != "true" -------------------
 		JLabel sex = new JLabel("性别             ", JLabel.RIGHT);
+		sexValue = new JTextField(15);
+		sexValue.setText(originalVal[2]);
+		/*
 		male = new JRadioButton("男", true);
 		female = new JRadioButton("女");
 		sexChoice = new ButtonGroup();
@@ -144,11 +146,11 @@ class ChangeDialog implements ActionListener{
 		System.out.println(originalVal[2] == "false");
 		if (originalVal[2] == "false"){
 			female.setSelected(true);
-		}
+		}*/
 		p3 = new JPanel();
 		p3.add(sex);
-		p3.add(male);
-		p3.add(female);
+		p3.add(sexValue);
+		//p3.add(female);
 		//----------------------------------------------------------------
 		
 		JLabel ID = new JLabel("身份证号码");
@@ -231,12 +233,14 @@ class ChangeDialog implements ActionListener{
 		String changedData[] = new String[8];
 		changedData[0] = originalNo;
 		changedData[1] = userNameValue.getText();
+		/*
 		if (male.isSelected()){
 			changedData[2] = "true";
 		}
 		else if (female.isSelected()){
 			changedData[2] = "false";
-		}
+		}*/
+		changedData[2] = sexValue.getText();
 		changedData[3] = IDValue.getText();
 		changedData[4] = phoneNumber.getText();
 		changedData[5] = mailAddress.getText();
